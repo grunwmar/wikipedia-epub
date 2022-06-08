@@ -1,0 +1,67 @@
+body{
+    font-size: 12pt;
+    line-height: 1.4;
+}
+
+p {
+    text-align: justify;
+}
+
+
+td, th {
+    border-bottom: 1px solid silver;
+    padding: 0.3em;
+    vertical-align: top;
+}
+
+table{
+    border: 1px solid gray;
+    border-collapse: collapse;
+    font-size: 70%;
+    margin: 0 auto;
+}
+
+
+.infobox{
+    display: table !important;
+    width: 90vw !important;
+    margin: 0 auto;
+}
+
+img, .thumb, .thumbinner, .thumbimage{
+    text-align: center;
+}
+
+.thumb {
+    margin: 10pt;
+}
+
+.thumbcaption {
+    font-size: 80%;
+}
+
+ul, ol {
+    font-size: 80%;
+}
+
+dl, dd {
+    width: 90vw;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 80%;
+}
+
+.mwe-math-element{
+    text-align: center;
+    margin: 0 auto;
+}
+
+.mwe-math-fallback-image-inline{
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+hr {
+    visibility: hidden;
+}
