@@ -15,9 +15,9 @@ td, th {
 }
 
 table{
-    border: 1px solid gray;
+    border: 1px solid silver;
     border-collapse: collapse;
-    font-size: 70%;
+    font-size: calc(0.5rem + 0.75vw);
     margin: 0 auto;
 }
 
@@ -48,7 +48,7 @@ dl, dd {
     width: 90vw;
     text-align: center;
     margin: 0 auto;
-    font-size: 80%;
+    font-size: 85%;
 }
 
 .mwe-math-element{

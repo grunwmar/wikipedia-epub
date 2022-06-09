@@ -7,8 +7,6 @@ if [ -z $CALIBRE ]; then
     read ANSWER
     if [[ $ANSWER = 'y' ]]; then
 	    sudo apt-get install calibre
-        else
-        exit
     fi
 fi
 
@@ -17,8 +15,6 @@ if [ -z $PYVENV ]; then
     read ANSWER
     if [[ $ANSWER = 'y' ]]; then
 	    sudo apt-get install python3-venv
-        else
-        exit
     fi
 fi
 

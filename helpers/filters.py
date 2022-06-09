@@ -4,6 +4,7 @@ import urllib.request
 import urllib.parse
 import re
 import logging
+import traceback
 
 log = logging.getLogger()
 
@@ -81,3 +82,12 @@ def lang_filter(lang, string):
         return lang_filter_f(string)
     else:
         return string
+
+
+def safe_filename(string):
+    old_string = string
+    not_allowed = '<>:\"\\/|?*'
+    for ch in not_allowed:
+        string = string.replace(ch, '_')
+    log.debug(f"String '{old_string}' substitued to '{string}'")
+    return string
