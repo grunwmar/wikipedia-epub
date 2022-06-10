@@ -16,3 +16,7 @@ fi
 vim $URL_LIST
 
 python3 __main__.py
+
+echo ""
+echo "..."
+read quit

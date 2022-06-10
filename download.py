@@ -36,7 +36,13 @@ def process(run_name, input_url, count):
     
     title_ = urllib.parse.unquote(title)
 
-    print(f"[\033[1m\033[36;1m{count: >3}\033[0m]\033[32;1m {language} \033[30;1m\033[42m {title_} \033[0m \n")
+    if count < 2:
+        spacer = ""
+    else:
+        spacer = 3*"\n"
+
+
+    print(f"{spacer}[\033[1m\033[36;1m{count: >3}\033[0m]\033[32;1m {language} \033[30;1m\033[42m {title_} \033[0m \n")
 
     log.info(f"Downloading article '{title_}' in with language code '{language}' ")
 
@@ -134,7 +140,7 @@ def process(run_name, input_url, count):
     except Exception as e:
         log.critical('Error', e)
     
-    log.info('Converted')
+    log.debug('Converted')
     
     shutil.rmtree(dir_name)
     log.info(f'Article "{title.upper()}" saved as "{urllib.parse.unquote(run_name_path)}.epub"')
@@ -148,5 +154,5 @@ def run(run_name, input_url, count):
     except Exception as e:
         err = f"Error: ",  str(e)
         log.exception('Error ' + str(e))
-    log.info("Exit \n\n")
+    log.debug("Exit \n\n")
 
