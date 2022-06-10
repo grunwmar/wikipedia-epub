@@ -11,6 +11,7 @@ from datetime import datetime as dt
 import mimetypes
 import iso639
 import requests
+import time
 
 log = logging.getLogger()
 
@@ -30,7 +31,7 @@ def wikipedia_api(title, language="en"):
         url=f"https://{language}.wikipedia.org/w/api.php?action=parse&prop=text&page={title}&format=json"
 
         headers = {
-             'User-Agent': 'Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0',
+             'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0',
         }
 
         rq = urllib.request.Request(url, headers=headers)
@@ -84,7 +85,13 @@ def download_image(img, dir_name, n=0):
     do_next_step = False
 
     try:
-        urlopen = urllib.request.urlopen(img['src'])
+        headers = {
+             'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0',
+        }
+
+        rq = urllib.request.Request(img['src'], headers=headers)
+    
+        urlopen = urllib.request.urlopen(rq)
         do_next_step = True
             
     except ValueError as e:
@@ -111,6 +118,7 @@ def download_image(img, dir_name, n=0):
                     
                 img['src'] = "./"+img_name
                 return True
+    # time.sleep(0.2)
     return False
 
 

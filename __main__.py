@@ -3,6 +3,11 @@ import re
 import logging
 import logging as log
 import download
+import time
+from datetime import datetime as dt
+
+NOW = dt.now()
+TIMESTAMP = NOW.strftime('%Y-%m-%d %H:%M:%S')
 
 log_format_string_F = '[%(asctime)s] %(levelname)-8s  %(message)s'
 log_format_string_C = '[\033[1m%(asctime)s\033[0m] \033[36m%(levelname)-8s\033[0m  %(message)s'
@@ -31,20 +36,30 @@ URL_LIST_FN = os.environ['WD_URL_LIST']
 RUN_NAME = [None]
 
 
-def parse_url_list(url_list_str):
 
+def parse_url_list(url_list_str):
+	COUNT = 0
 	for row in url_list_str.split('\n'):
 		row = row.strip()
 		if not row.startswith('#') and len(row) > 0:
 			if row.startswith('@'):
 				RUN_NAME[0] = row[1:]
 			else:
-				download.run(RUN_NAME[0], row)
+				COUNT += 1
+				download.run(RUN_NAME[0], row, COUNT)
+				time.sleep(4)
 
 
 def main():
+	url_list = ''
 	with open(URL_LIST_FN, 'r') as fp:
-		parse_url_list(fp.read())
+		url_list += fp.read()
+		parse_url_list(url_list)
+
+	with open(URL_LIST_FN + '.downloaded', 'a') as fp:
+		fp.write(f'\n# [{TIMESTAMP}]\n')
+		fp.write(url_list.strip())
+		fp.write('\n')
 
 
 if __name__ == '__main__':

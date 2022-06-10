@@ -26,7 +26,7 @@ EXPORT_DIR = export_destination()
 RTL_LANGUAGES = ['he', 'yi', 'ar']
 
 
-def process(run_name, input_url):
+def process(run_name, input_url, count):
 
     language, title = parse_url(input_url)
 
@@ -36,7 +36,7 @@ def process(run_name, input_url):
     
     title_ = urllib.parse.unquote(title)
 
-    print(f" -> \033[1m\033[34m{language}\033[0m:\033[1m\033[32m{title_}\033[0m \n")
+    print(f"[\033[1m\033[36;1m{count: >3}\033[0m]\033[32;1m {language} \033[30;1m\033[42m {title_} \033[0m \n")
 
     log.info(f"Downloading article '{title_}' in with language code '{language}' ")
 
@@ -115,7 +115,10 @@ def process(run_name, input_url):
 
         EXPORT_DIR = NAMED_DIR
 
-    export_path = os.path.join(EXPORT_DIR, f'{language.upper()}_{epub_name}')
+    filename_lang = f'{language.upper()}_{epub_name}'
+    run_name_path = os.path.join(run_name, filename_lang)
+    export_path = os.path.join(EXPORT_DIR, filename_lang)
+    
     if language_name_tuple[0].lower() == language_name_tuple[1].lower():
         lang_a = f'{language_name_tuple[1]}; '.split('; ')[0]
         language_name = f'{lang_a}'
@@ -134,13 +137,14 @@ def process(run_name, input_url):
     log.info('Converted')
     
     shutil.rmtree(dir_name)
-    log.info(f'Article "{title.upper()}" saved as "{urllib.parse.unquote(export_path)}.epub"')
+    log.info(f'Article "{title.upper()}" saved as "{urllib.parse.unquote(run_name_path)}.epub"')
+    log.debug(f'-> "{urllib.parse.unquote(export_path)}.epub"')
     return 0
 
 
-def run(run_name, input_url):
+def run(run_name, input_url, count):
     try:
-        process(run_name, input_url)
+        process(run_name, input_url, count)
     except Exception as e:
         err = f"Error: ",  str(e)
         log.exception('Error ' + str(e))
