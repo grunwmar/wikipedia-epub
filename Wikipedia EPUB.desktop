@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Wikipedia EPUB
+Comment=
+Exec=./run.sh
+Icon=wikipedia
+Terminal=true
+StartupNotify=false
+Path=
