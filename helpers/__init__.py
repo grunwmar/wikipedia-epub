@@ -113,10 +113,13 @@ def download_image(img, dir_name, n=0):
 
                 img_name = f'img_{n}_{img_name}'.replace('%', '-')
                 local_img_path = os.path.join(dir_name, img_name)
-                with open(local_img_path, 'wb') as img_file:
-                    img_file.write(response.read())
-                    
-                img['src'] = "./"+img_name
+                try:
+                    with open(local_img_path, 'wb') as img_file:
+                        img_file.write(response.read())
+                        
+                    img['src'] = "./"+img_name
+                except:
+                    return False
                 return True
     # time.sleep(0.2)
     return False
