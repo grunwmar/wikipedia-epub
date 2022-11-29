@@ -8,6 +8,8 @@ export WD_ARTICLE_INDEX=1
 
 vim $URL_LIST
 
+python3 expand_url.py "$URL_LIST"
+
 RAW_STRING=$(sed -n '1{/^@/p};q' $URL_LIST)
 RUN_TITLE="!x-none"
 
