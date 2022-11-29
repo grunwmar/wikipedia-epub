@@ -28,7 +28,6 @@ while read row; do
             export WD_RUN_TITLE=$RUN_TITLE
             python3 __main__.py
             echo ""
-            sleep 5s
         fi
     fi
 
