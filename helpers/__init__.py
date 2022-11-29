@@ -2,7 +2,7 @@
 import sys
 import re
 import os
-import logging 
+import logging
 import urllib.request
 import urllib.parse
 import json
@@ -14,6 +14,17 @@ import requests
 
 log = logging.getLogger()
 
+CONN_CONFIG = {
+  "UserAgent": "Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0",
+  "ApiUrl": "https://{language}.wikipedia.org/w/api.php?action=parse&page={title}&format=json&formatversion=1"
+}
+
+try:
+    with open('./cfg/connection.json') as cf:
+        CONN_CONFIG = json.load(cf)
+except:
+    ...
+
 
 def parse_url(url):
     expr = re.compile(r'https?\:\/\/([a-z\-]+)\.wikipedia\.org\/wiki\/(.+)')
@@ -22,15 +33,15 @@ def parse_url(url):
         if result[0][0] != '' or result[0][1] != '':
             return result[0]
     log.critical("Fatal error Url does not match")
-    return None, None 
+    return None, None
 
 
 def wikipedia_api(title, language="en"):
     try:
-        url=f"https://{language}.wikipedia.org/w/api.php?action=parse&prop=text&page={title}&format=json"
+        url = CONN_CONFIG['ApiUrl'].format(language=language, title=title)
 
         headers = {
-             'User-Agent': 'Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0',
+             'User-Agent': CONN_CONFIG['UserAgent'],
         }
 
         rq = urllib.request.Request(url, headers=headers)
@@ -39,10 +50,10 @@ def wikipedia_api(title, language="en"):
             if response.status == 200:
 
                 read = response.read()
-                
+
                 response_string = read.decode('utf-8')
                 data = json.loads(response_string)
-                
+
                 if data.get('error') is not None:
                     log.critical(f'Error in {urllib.parse.unquote(title)}', data['error'].get('info'))
                     return None, None, None
@@ -57,7 +68,7 @@ def wikipedia_api(title, language="en"):
                 text = data['parse']['text']['*']
 
                 return title, text, hex_string
-            
+
             else:
                 log.critical(f'Returned status is {response.status} not 200.', 'bad status')
                 return None, None, None
@@ -86,7 +97,7 @@ def download_image(img, dir_name, n=0):
     try:
         urlopen = urllib.request.urlopen(img['src'])
         do_next_step = True
-            
+
     except ValueError as e:
         img.extract()
         log.error(f"Problem with image downloading [{img['src']}]")
@@ -99,7 +110,7 @@ def download_image(img, dir_name, n=0):
 
                 img_name = os.path.basename(img['src'])
                 fname, fext = os.path.splitext(img_name)
-                    
+
                 if fext == '':
                     fext = ext
                     img_name = fname+fext
@@ -108,7 +119,7 @@ def download_image(img, dir_name, n=0):
                 local_img_path = os.path.join(dir_name, img_name)
                 with open(local_img_path, 'wb') as img_file:
                     img_file.write(response.read())
-                    
+
                 img['src'] = "./"+img_name
                 return True
     return False

@@ -1,0 +1,7 @@
+{
+  "UserAgent": "Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0",
+  "ApiUrl": "https://{language}.wikipedia.org/w/api.php?action=parse&page={title}&format=json&formatversion=1",
+  "ImageDownloadPause": 0.5,
+  "ImageDownloadVerbose": false,
+  "MainInitPause": 1
+}

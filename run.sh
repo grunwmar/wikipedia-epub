@@ -28,12 +28,12 @@ while read row; do
             export WD_RUN_TITLE=$RUN_TITLE
             python3 __main__.py
             echo ""
-            sleep 3s
+            sleep 5s
         fi
     fi
 
     FIRST=0
-    
+
 done <"./cfg/url_list"
 export WD_ARTICLE_INDEX=1
 

@@ -1,6 +1,7 @@
 body{
-    font-size: 12pt;
+    font-size: 16pt;
     line-height: 1.4;
+    font-family: "Noto Sans", "Taamey David";
 }
 
 p {
@@ -19,6 +20,10 @@ table{
     border-collapse: collapse;
     font-size: 70%;
     margin: 0 auto;
+}
+
+table * {
+    display: block;
 }
 
 
@@ -48,7 +53,7 @@ dl, dd {
     width: 90vw;
     text-align: center;
     margin: 0 auto;
-    font-size: 80%;
+    font-size: 95%;
 }
 
 .mwe-math-element{

@@ -14,15 +14,28 @@ from helpers.filters import perform_html_trim, lang_filter
 import logging
 import logging as log
 import os
+import time
+
+CONN_CONFIG = {
+    "ImageDownloadPause": 0.5,
+    "ImageDownloadVerbose": False,
+    "MainInitPause": 1,
+}
+
+try:
+    with open('./cfg/connection.json') as cf:
+        CONN_CONFIG = json.load(cf)
+except:
+    ...
 
 
 log_format_string_F = '[%(asctime)s] %(levelname)-8s  %(message)s'
 log_format_string_C = '[\033[1m%(asctime)s\033[0m] \033[36m%(levelname)-8s\033[0m  %(message)s'
 logging.basicConfig(
      filename='logger.txt',
-     level=logging.DEBUG, 
+     level=logging.DEBUG,
      format= log_format_string_F,
-     datefmt='%H:%M:%S'
+     datefmt='%Y-%m-%d %H:%M:%S'
  )
 
 
@@ -40,6 +53,7 @@ log.getLogger('').addHandler(console)
 
 NOW = dt.now()
 TIMESTAMP = NOW.strftime('%Y%m%d%H%M%S%f')
+TIMESTAMP_DL = NOW.strftime('%Y-%m-%d %H:%M:%S')
 EXPORT_DIR = export_destination()
 RTL_LANGUAGES = ['he', 'yi', 'ar']
 
@@ -52,7 +66,7 @@ def main():
     if language is None or title is None:
         log.critical(f'Invalid result of parsing language={language}, title={title}  <== invalid parse result')
         return 1
-    
+
     title_ = urllib.parse.unquote(title)
 
     print(f" -> \033[1m\033[34m{language}\033[0m:\033[1m\033[32m{title_}\033[0m \n")
@@ -73,7 +87,7 @@ def main():
     os.mkdir(dir_name)
 
     perform_html_trim(soup)
-    
+
     images = soup.find_all('img')
     images_number = len(images)
     images_downloaded = 0
@@ -82,11 +96,18 @@ def main():
     log.debug(f'** downloading {images_number} images...')
 
     for n, img in enumerate(images, start=1):
-        d = download_image(img, dir_name, n)
-        if d:
-            images_downloaded +=1
-        else:
+        try:
+            if CONN_CONFIG['ImageDownloadVerbose']:
+                print(f"#{n} - {img}")
+            d = download_image(img, dir_name, n)
+            if d:
+                images_downloaded +=1
+            else:
+                images_failed += 1
+        except Exception as e:
             images_failed += 1
+            log.critical(f'Image could not be downloaded. <{e}>')
+        time.sleep(CONN_CONFIG['ImageDownloadPause'])
 
     log.debug(f'** downloaded: {images_downloaded}, failed: {images_failed}')
 
@@ -117,7 +138,7 @@ def main():
     with open('document_style.css', 'r') as style_file:
         with open(os.path.join(dir_name, 'document_style.css'), 'w') as new_style_file:
             new_style_file.write(style_file.read())
-    
+
     doc_path = os.path.join(dir_name, 'document.xhtml')
     epub_name = title.replace(' ', '_').replace(':', '-').replace('/', '_').replace('\\', '_')
 
@@ -143,15 +164,15 @@ def main():
         lang_b = f'{language_name_tuple[1]}; '.split('; ')[0]
         language_name = f'{lang_a} ({lang_b})'
     try:
-        conversion = os.system(f'bash make_epub.sh "{doc_path}" "{export_path}" "{language}" "{title}" "{input_url}" "{language_name}"')
+        conversion = os.system(f'bash make_epub_.sh "{doc_path}" "{export_path}" "{language}" "{title}" "{input_url}" "{language_name}"')
         with open("downloads.txt", "a") as down_file:
-            down_file.write(input_url + "\n")
-            
+            down_file.write(input_url + f" # {TIMESTAMP_DL}\n")
+
     except Exception as e:
         log.critical('Error', e)
-    
+
     log.info('Converted')
-    
+
     shutil.rmtree(dir_name)
     log.info(f'Article "{title.upper()}" saved as "{urllib.parse.unquote(export_path)}.epub"')
     return 0
@@ -160,8 +181,8 @@ def main():
 if __name__ == '__main__':
     try:
         main()
+        time.sleep(CONN_CONFIG['MainInitPause'])
     except Exception as e:
         err = f"Error: ",  str(e)
         log.critical('Error ' + str(e))
     log.info("Exit \n\n")
-
