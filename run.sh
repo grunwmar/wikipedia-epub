@@ -8,7 +8,7 @@ export WD_ARTICLE_INDEX=1
 
 vim $URL_LIST
 
-echo -n "Continue to download? [y/N]"
+echo -n "Continue to download? [y/N]: "
 read CONFIRM
 if ! [ $CONFIRM = "y" ]; then
     exit 0
