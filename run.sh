@@ -8,7 +8,13 @@ export WD_ARTICLE_INDEX=1
 
 vim $URL_LIST
 
-python3 expand_url.py "$URL_LIST"
+echo -n "Continue to download? [y/N]"
+read CONFIRM
+if ! [ $CONFIRM = "y" ]; then
+    exit 0
+fi
+
+# python3 expand_url.py "$URL_LIST"
 
 RAW_STRING=$(sed -n '1{/^@/p};q' $URL_LIST)
 RUN_TITLE="!x-none"

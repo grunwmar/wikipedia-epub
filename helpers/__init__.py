@@ -43,6 +43,9 @@ def wikipedia_api(title, language="en"):
         headers = {
              'User-Agent': CONN_CONFIG['UserAgent'],
         }
+        
+        if CONN_CONFIG.get('AuthToken') is not None:
+			headers.update({'Authorization': CONN_CONFIG['AuthToken']})
 
         rq = urllib.request.Request(url, headers=headers)
 

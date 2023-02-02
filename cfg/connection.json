@@ -3,5 +3,6 @@
   "ApiUrl": "https://{language}.wikipedia.org/w/api.php?action=parse&page={title}&format=json&formatversion=1",
   "ImageDownloadPause": 0.5,
   "ImageDownloadVerbose": false,
-  "MainInitPause": 1
+  "MainInitPause": 1,
+  "AuthToken": null
 }

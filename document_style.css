@@ -22,11 +22,6 @@ table{
     margin: 0 auto;
 }
 
-table * {
-    display: block;
-}
-
-
 .infobox{
     display: table !important;
     width: 90vw !important;
