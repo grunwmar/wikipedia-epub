@@ -46,3 +46,5 @@ export WD_ARTICLE_INDEX=1
 
 echo " ... "
 read x
+
+deactivate
