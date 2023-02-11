@@ -4,5 +4,6 @@
   "ImageDownloadPause": 0.5,
   "ImageDownloadVerbose": false,
   "MainInitPause": 1,
-  "AuthToken": null
+  "AuthToken": null,
+  "OutputFormat": "epub"
 }

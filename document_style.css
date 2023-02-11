@@ -1,47 +1,66 @@
 body{
-    font-size: 14pt;
-    line-height: 1.4;
+    font-size: 16pt;
+    line-height: 1.5;
+    font-family: 'M PLUS 1p' ,'FreeSans', sans-serif; 
 }
+
 
 p {
     text-align: justify;
+    page-break-inside: avoid !important;
 }
 
 
 td, th {
-    border-bottom: 1px solid silver;
+    border: 1px solid silver;
     padding: 0.3em;
     vertical-align: top;
 }
-
+ 
+ 
 table{
-    border: 1px solid gray;
+    border: 1px solid silver;
     border-collapse: collapse;
     font-size: 70%;
     margin: 0 auto;
-}
 
+    margin-top: 1em;
+    margin-bottom: 1em;
+    
+    width: 95vw !important;
+    page-break-inside: avoid !important;
+} 
+ 
+ 
 .infobox{
     display: table !important;
-    width: 90vw !important;
+    width: 95vw !important;
     margin: 0 auto;
 }
+
 
 img, .thumb, .thumbinner, .thumbimage{
     text-align: center;
 }
 
+
 .thumb {
     margin: 10pt;
 }
 
+
 .thumbcaption {
-    font-size: 80%;
+    font-size: 90%;
+}
+
+li {
+page-break-inside: avoid !important;
 }
 
 ul, ol {
-    font-size: 80%;
+    font-size: 90%;
 }
+
 
 dl, dd {
     width: 90vw;
@@ -50,10 +69,12 @@ dl, dd {
     font-size: 95%;
 }
 
+
 .mwe-math-element{
     text-align: center;
     margin: 0 auto;
 }
+
 
 .mwe-math-fallback-image-inline{
     text-align: center;

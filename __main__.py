@@ -20,6 +20,7 @@ CONN_CONFIG = {
     "ImageDownloadPause": 0.5,
     "ImageDownloadVerbose": False,
     "MainInitPause": 1,
+    "OutputFormat": "epub"
 }
 
 try:
@@ -117,16 +118,14 @@ def main():
     if language in RTL_LANGUAGES:
         direction = 'rtl'
 
-    body = str(soup)
+    body = str(soup)    
+    
     html_envelope = f"""<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{language}" lang="{language}" dir="{direction}">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="document_style.css"/>
 <title>{title}</title>
-<script>
-
-</script>
 </head>
 <body>
     <h1>{lang_filter(language, title)}</h1>
@@ -164,7 +163,8 @@ def main():
         lang_b = f'{language_name_tuple[1]}; '.split('; ')[0]
         language_name = f'{lang_a} ({lang_b})'
     try:
-        conversion = os.system(f'bash make_epub_.sh "{doc_path}" "{export_path}" "{language}" "{title}" "{input_url}" "{language_name}"')
+        output_fmt = CONN_CONFIG['OutputFormat'].lower()
+        conversion = os.system(f'bash make_{output_fmt}_.sh "{doc_path}" "{export_path}" "{language}" "{title}" "{input_url}" "{language_name}"')
         with open("downloads.txt", "a") as down_file:
             down_file.write(input_url + f" # {TIMESTAMP_DL}\n")
 
