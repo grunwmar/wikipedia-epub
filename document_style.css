@@ -1,17 +1,18 @@
 body{
-    font-size: 16pt;
     line-height: 1.5;
     font-family: 'M PLUS 1p' ,'FreeSans', sans-serif; 
 }
 
 
 p {
+    line-height: 1.5;
     text-align: justify;
     page-break-inside: avoid !important;
 }
 
 
 td, th {
+    line-height: 1.5;
     border: 1px solid silver;
     padding: 0.3em;
     vertical-align: top;
@@ -23,16 +24,15 @@ table{
     border-collapse: collapse;
     font-size: 70%;
     margin: 0 auto;
-
     margin-top: 1em;
     margin-bottom: 1em;
-    
     width: 95vw !important;
     page-break-inside: avoid !important;
 } 
  
  
 .infobox{
+    line-height: 1.5;
     display: table !important;
     width: 95vw !important;
     margin: 0 auto;
@@ -43,27 +43,25 @@ img, .thumb, .thumbinner, .thumbimage{
     text-align: center;
 }
 
-
 .thumb {
     margin: 10pt;
 }
-
 
 .thumbcaption {
     font-size: 90%;
 }
 
 li {
-page-break-inside: avoid !important;
+    page-break-inside: avoid !important;
 }
 
 ul, ol {
-    font-size: 90%;
+    font-size: 95%;
 }
 
-
 dl, dd {
-    width: 90vw;
+    line-height: 1.5;
+    width: 92vw;
     text-align: center;
     margin: 0 auto;
     font-size: 95%;
@@ -75,12 +73,10 @@ dl, dd {
     margin: 0 auto;
 }
 
-
 .mwe-math-fallback-image-inline{
     text-align: center;
     margin: 0 auto;
 }
-
 
 hr {
     visibility: hidden;
